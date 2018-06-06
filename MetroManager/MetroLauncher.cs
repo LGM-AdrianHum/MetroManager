@@ -14,42 +14,39 @@ namespace MetroManager
 {
     [ComImport]
     [Guid("45BA127D-10A8-46EA-8AB7-56EA9078943C")]
-    internal class ApplicationActivationManager
-    {
-    }
+    internal class ApplicationActivationManager { }
 
     internal static class MetroLauncher
     {
         public static uint LaunchApp(string packageFullName, string arguments = null)
         {
             var pir = IntPtr.Zero;
-            var activation = (IApplicationActivationManager) new ApplicationActivationManager();
+            var activation = (IApplicationActivationManager)new ApplicationActivationManager();
             try
             {
                 var error = OpenPackageInfoByFullName(packageFullName, 0, out pir);
                 Debug.Assert(error == 0);
-                if (error != 0)
-                    throw new Win32Exception(error);
+                if (error != 0) throw new Win32Exception(error);
 
-                int length = 0, count;
-                GetPackageApplicationIds(pir, ref length, null, out count);
+                int length = 0;
+                GetPackageApplicationIds(pir, ref length, null, out var count);
 
                 var buffer = new byte[length];
                 error = GetPackageApplicationIds(pir, ref length, buffer, out count);
+
                 Debug.Assert(error == 0);
                 if (error != 0) throw new Win32Exception(error);
 
                 var appUserModelId = Encoding.Unicode.GetString(buffer, IntPtr.Size * count, length - IntPtr.Size * count);
 
-                var hr = activation.ActivateApplication(appUserModelId, arguments ?? string.Empty,
-                    ActivateOptions.NoErrorUI, out var pid);
+                var hr = activation.ActivateApplication(appUserModelId, arguments ?? string.Empty, ActivateOptions.NoErrorUI, out var pid);
                 if (hr < 0) Marshal.ThrowExceptionForHR(hr);
+
                 return pid;
             }
             finally
             {
-                if (pir != IntPtr.Zero)
-                    ClosePackageInfo(pir);
+                if (pir != IntPtr.Zero) ClosePackageInfo(pir);
             }
         }
 
