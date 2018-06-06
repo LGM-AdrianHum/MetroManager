@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:conv="clr-namespace:MetroManager.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:MetroManager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,74 +17,91 @@
     Icon="/icons/package.ico"
     TitleCaps="False"
     mc:Ignorable="d">
-  <Window.Resources>
-    <conv:VersionToStringConverter x:Key="version2String" />
-  </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-    <TextBox
-        Grid.Row="1"
-        Width="400"
-        HorizontalAlignment="Left"
-        metro:TextBoxHelper.ClearTextButton="True"
-        metro:TextBoxHelper.Watermark="Type to search"
-        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
-    <DataGrid
-        x:Name="_packages"
-        Grid.Row="2"
-        AutoGenerateColumns="False"
-        FontSize="12"
-        IsReadOnly="True"
-        ItemsSource="{Binding Packages}"
-        SelectedItem="{Binding SelectedPackage, Mode=TwoWay}"
-        SelectionMode="Single"
-        VirtualizingPanel.IsVirtualizing="True">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseDoubleClick">
-          <i:InvokeCommandAction Command="{Binding LaunchCommand}" />
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-      <DataGrid.ColumnHeaderStyle>
-        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="DataGridColumnHeader">
-          <Setter Property="FontWeight" Value="Bold" />
-          <Setter Property="FontSize" Value="14" />
-          <Setter Property="Padding" Value="6,2" />
-        </Style>
-      </DataGrid.ColumnHeaderStyle>
-      <DataGrid.Columns>
-        <DataGridTextColumn Binding="{Binding Id.Name}" Header="Package Name">
-          <DataGridTextColumn.CellStyle>
-            <Style TargetType="DataGridCell">
-              <Setter Property="FontWeight" Value="Bold" />
-            </Style>
-          </DataGridTextColumn.CellStyle>
-        </DataGridTextColumn>
-        <DataGridCheckBoxColumn Binding="{Binding IsFramework, Mode=OneTime}" Header="Framework ?" />
-        <DataGridCheckBoxColumn Binding="{Binding IsDevelopmentMode, Mode=OneTime}" Header="Development ?" />
-        <DataGridCheckBoxColumn Binding="{Binding IsResourcePackage, Mode=OneTime}" Header="Resource ?" />
-        <DataGridTextColumn Binding="{Binding Id.Architecture}" Header="Architecture" />
-        <DataGridTextColumn Binding="{Binding Id.FullName}" Header="Package Full Name" />
-        <!--<DataGridTextColumn Header="Family Name" Binding="{Binding Id.FamilyName}" />-->
-        <DataGridTextColumn Binding="{Binding Id.Version, Converter={StaticResource version2String}}" Header="Version" />
-        <DataGridTextColumn Binding="{Binding InstalledLocation.Path}" Header="Installed Location" />
-      </DataGrid.Columns>
-    </DataGrid>
-    <ToolBar Grid.Row="0" Margin="2">
-      <Button
-          Command="{Binding LaunchCommand}"
-          Content="Launch"
-          FontWeight="Bold" />
-      <Separator />
-      <Button Command="{Binding RefreshCommand}" Content="Refresh" />
-      <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
-    </ToolBar>
-    <StatusBar Grid.Row="3">
-      <TextBlock Text="{Binding Packages.Count, StringFormat=Packages: \{0\}}" />
-    </StatusBar>
-  </Grid>
+    <Window.Resources>
+        <conv:VersionToStringConverter x:Key="version2String" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid
+            x:Name="_packages"
+            Grid.Row="2"
+            AutoGenerateColumns="False"
+            FontSize="12"
+            IsReadOnly="True"
+            ItemsSource="{Binding Packages}"
+            SelectedItem="{Binding SelectedPackage, Mode=TwoWay}"
+            SelectionMode="Single"
+            VirtualizingPanel.IsVirtualizing="True">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding LaunchCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <!--<DataGrid.ColumnHeaderStyle>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="DataGridColumnHeader">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="Padding" Value="6,2" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id.Name}" Header="Package Name">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridCheckBoxColumn Binding="{Binding IsFramework, Mode=OneTime}" Header="Framework ?" />
+                <DataGridCheckBoxColumn Binding="{Binding IsDevelopmentMode, Mode=OneTime}" Header="Development ?" />
+                <DataGridCheckBoxColumn Binding="{Binding IsResourcePackage, Mode=OneTime}" Header="Resource ?" />
+                <DataGridTextColumn Binding="{Binding Id.Architecture}" Header="Architecture" />
+                <DataGridTextColumn Binding="{Binding Id.FullName}" Header="Package Full Name" />
+                <!--<DataGridTextColumn Header="Family Name" Binding="{Binding Id.FamilyName}" />-->
+                <DataGridTextColumn Binding="{Binding Id.Version, Converter={StaticResource version2String}}" Header="Version" />
+                <DataGridTextColumn Binding="{Binding InstalledLocation.Path}" Header="Installed Location" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ToolBar Grid.Row="0" Margin="2">
+            <Button Command="{Binding LaunchCommand}" FontWeight="Bold">
+                <TextBlock FontSize="15">
+                    <fa:ImageAwesome
+                        Width="14"
+                        Height="14"
+                        Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"
+                        Icon="Rocket" />
+                    <Run Text=" Launch" />
+                </TextBlock>
+            </Button>
+            <Separator />
+            <Button Command="{Binding RefreshCommand}">
+                <TextBlock FontSize="15">
+                    <fa:ImageAwesome
+                        Width="14"
+                        Height="14"
+                        Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"
+                        Icon="Refresh" />
+                    <Run Text=" Refresh" />
+                </TextBlock>
+            </Button>
+            <Separator />
+            <TextBox
+                Grid.Row="1"
+                Width="400"
+                HorizontalAlignment="Left"
+                metro:TextBoxHelper.ClearTextButton="True"
+                metro:TextBoxHelper.Watermark="Type to search"
+                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
+            <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
+        </ToolBar>
+        <StatusBar Grid.Row="3">
+            <TextBlock Text="{Binding Packages.Count, StringFormat=Packages: \{0\}}" />
+        </StatusBar>
+    </Grid>
 </metro:MetroWindow>
