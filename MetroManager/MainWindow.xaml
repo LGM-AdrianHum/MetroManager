@@ -79,7 +79,7 @@
                     <Run Text=" Launch" />
                 </TextBlock>
             </Button>
-            <Separator />
+            <Separator Margin="6,0" />
             <Button Command="{Binding RefreshCommand}">
                 <TextBlock FontSize="15">
                     <fa:ImageAwesome
@@ -90,7 +90,7 @@
                     <Run Text=" Refresh" />
                 </TextBlock>
             </Button>
-            <Separator />
+            <Separator Margin="6,0" />
             <TextBox
                 Grid.Row="1"
                 Width="400"
