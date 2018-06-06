@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// File: MetroManager/MetroManager/VersionToStringConverter.cs
+// User: Adrian Hum/
+//
+// Created:  2018-06-06 8:34 PM
+// Modified: 2018-06-06 10:02 PM
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using Windows.ApplicationModel;
 
-namespace MetroManager.Converters {
-	class VersionToStringConverter : IValueConverter {
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			var version = (PackageVersion)value;
-			return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+namespace MetroManager.Converters
+{
+    internal class VersionToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var version = (PackageVersion)value;
+            return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
         }
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-			throw new NotImplementedException();
-		}
-	}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

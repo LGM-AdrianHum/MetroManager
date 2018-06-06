@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// File: MetroManager/MetroManager/MainWindow.xaml.cs
+// User: Adrian Hum/
+//
+// Created:  2018-06-06 8:34 PM
+// Modified: 2018-06-06 10:00 PM
+
 using MetroManager.ViewModels;
 
-namespace MetroManager {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow {
-		public MainWindow() {
-			InitializeComponent();
+namespace MetroManager
+{
+    /// <summary>
+    ///     Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
 
-			DataContext = new MainViewModel();
-		}
-	}
+            DataContext = new MainViewModel();
+        }
+    }
 }
