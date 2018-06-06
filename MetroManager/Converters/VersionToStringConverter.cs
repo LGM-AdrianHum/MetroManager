@@ -11,6 +11,9 @@ using Windows.ApplicationModel;
 
 namespace MetroManager.Converters
 {
+    /// <summary>
+    /// Very useful routine... I have been writing toString override method all this time
+    /// </summary>
     internal class VersionToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
